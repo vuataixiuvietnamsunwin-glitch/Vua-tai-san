@@ -2,29 +2,48 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Game Test</title>
+<title>Demo Nhạc Nền</title>
+<style>
+body{
+ background:#111;
+ color:white;
+ text-align:center;
+ padding-top:120px;
+ font-family:sans-serif;
+}
+button{
+ font-size:20px;
+ padding:12px 20px;
+ border:none;
+ border-radius:8px;
+ background:#00ff99;
+ color:#000;
+}
+</style>
 </head>
-<body style="background:#111;color:white;text-align:center;padding-top:80px">
+<body>
+
+<h2>🎵 Demo Nhạc Nền</h2>
+<button onclick="toggleBGM()">▶ BẬT NHẠC</button>
 
 <audio id="bgm" src="bgm.mp3" loop></audio>
 
-<button onclick="toggleBGM()">🔊 BẬT / TẮT NHẠC</button>
-
 <script>
 const bgm = document.getElementById("bgm");
-let bgmOn = false;
+let playing = false;
 
 function toggleBGM(){
- if(!bgmOn){
+ if(!playing){
   bgm.play().then(()=>{
-   console.log("Nhạc đang chạy");
-  }).catch(e=>{
-   alert("Trình duyệt chặn audio — hãy chạm lại nút");
+   playing = true;
+   document.querySelector("button").innerText = "⏸ TẮT NHẠC";
+  }).catch(()=>{
+   alert("Trình duyệt chặn âm thanh — hãy chạm lại nút");
   });
-  bgmOn = true;
  }else{
   bgm.pause();
-  bgmOn = false;
+  playing = false;
+  document.querySelector("button").innerText = "▶ BẬT NHẠC";
  }
 }
 </script>
