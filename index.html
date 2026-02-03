@@ -548,16 +548,18 @@ button,input{padding:8px;margin:4px}
 </head>
 
 <body>
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 <div class="board">
 <div id="coinLayer"></div>
 
 <div class="top-left">
+
 <button onclick="deposit()">💰NẠP TIỀN</button>
 </div>
 <div class="top-right">
+<button onclick="toggleBGM()">🔊 NHẠC</button>
 <button onclick="toggleSessionHistory()">📊SOI CẦU</button>
 <button onclick="toggleBetHistory()">📜 LỊCH SỬ</button>
-    
 <button onclick="toggleRank()">🏆 BXH</button>
 </div>
 
@@ -1817,7 +1819,30 @@ function genRandomRoad(count){
  }
  return fake;
 }
+const bgm = document.getElementById("bgm");
+bgm.loop = true;
+bgm.volume = 0.4;
+let bgmOn = false;
 
+function toggleBGM(){
+ if(!bgmOn){
+  bgm.play().catch(()=>{});
+  bgmOn = true;
+ }else{
+  bgm.pause();
+  bgmOn = false;
+ }
+}
+
+// 👉 Auto phát sau lần chạm đầu (fix iOS/Chrome mobile)
+function autoStartBGM(){
+ bgm.play().catch(()=>{});
+ document.removeEventListener("click", autoStartBGM);
+ document.removeEventListener("touchstart", autoStartBGM);
+}
+
+document.addEventListener("click", autoStartBGM);
+document.addEventListener("touchstart", autoStartBGM);
 </script>
 </body>
 </html>
