@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta charset="UTF-8">
 <title>TRÙM SĂN WIN</title>
 
@@ -544,11 +545,37 @@ button,input{padding:8px;margin:4px}
  40%  { transform: scale(1.20); }
  100% { transform: scale(1); }
 }
+html, body{
+ margin:0;
+ padding:0;
+ width:100%;
+ height:100%;
+ background:#0b0f1a;
+ overflow:hidden;
+}
+
+#app{
+ width:100vw;
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+}
+
+/* Khung thiết kế gốc (mobile portrait) */
+#gameScale{
+ width:420px;
+ height:760px; /* ~ tỉ lệ 9:16 */
+ transform-origin: top center;
+}
 </style>
 </head>
 
 <body>
-<div class="board">
+<div id="app">
+  <div id="gameScale">
+    <div class="board">
 <div id="coinLayer"></div>
 
 <div class="top-left">
@@ -1817,7 +1844,25 @@ function genRandomRoad(count){
  }
  return fake;
 }
+function resizeGame(){
+ const baseW = 420;
+ const baseH = 760;
 
+ const scale = Math.min(
+  window.innerWidth / baseW,
+  window.innerHeight / baseH
+ );
+
+ const game = document.getElementById("gameScale");
+ game.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", resizeGame);
+window.addEventListener("orientationchange", resizeGame);
+resizeGame();
 </script>
+    </div>
+  </div>
+</div>
 </body>
 </html>
